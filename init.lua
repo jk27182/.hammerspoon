@@ -34,7 +34,7 @@ hs.hotkey.bind({"shift", "alt"}, "G", open_app("Google Chrome"))
 hs.hotkey.bind({"shift", "alt"}, "P", open_app("Preview"))
 --- end quick open applications
 
-hs.hotkey.bind({"shift", "alt"}, "T", function()
+hs.hotkey.bind({"shift", "alt"}, "space", function()
   local app = hs.application.get("kitty")
   if app then
       if not app:mainWindow() then
@@ -49,8 +49,8 @@ hs.hotkey.bind({"shift", "alt"}, "T", function()
       app = hs.application.get("kitty")
   end
 
-  app:mainWindow():moveToUnit'[100,50,0,0]'
-  app:mainWindow().setShadows(false)
+  -- app:mainWindow():moveToUnit'[100,50,0,0]'
+  -- app:mainWindow().setShadows(false)
 end)
 -- paired with hide_window_decorations yes in kitty.conf it makes for a very viable alternative to iTerm
 -- hs.hotkey.bind({"alt", "shift"}, "H", function()
