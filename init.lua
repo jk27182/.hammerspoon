@@ -71,18 +71,19 @@ end)
 -- end)
 
 -- Fenster "magnetisieren"
-function magnetizeWindowLeft() 
-	local app = hs.application.frontmostApplication()
-	print(app)
-	local t = app:findMenuItem({"Window", "Move Window to Left Side of Screen"})
-	print(t)
-	local t = app:findMenuItem({"Fenster"})
-	print(t)
-	print(app:getMenuItems())
-	app:selectMenuItem({"Window", "Move Window to Left Side of Screen"})
-end
+-- function magnetizeWindowLeft() 
+-- 	local app = hs.application.frontmostApplication()
+-- 	print(app)
+-- 	local t = app:findMenuItem({"Window", "Move Window to Left Side of Screen"})
+-- 	print(t)
+-- 	local t = app:findMenuItem({"Fenster"})
+-- 	print(t)
+-- 	print(app:getMenuItems())
+-- 	app:selectMenuItem({"Window", "Move Window to Left Side of Screen"})
+-- end
 -- hs.hotkey.bind({"shift", "alt"}, 'P', magnetizeWindowLeft)
 --
+local animation_duration = 0.07
 hs.hotkey.bind({"shift", "alt"}, "H", function()
   local win = hs.window.focusedWindow()
   if not win then
@@ -96,7 +97,7 @@ hs.hotkey.bind({"shift", "alt"}, "H", function()
   f.y = max.y
   f.w = max.w / 2
   f.h = max.h
-  win:setFrame(f, 0)
+  win:setFrame(f, animation_duration)
 end)
 
 hs.hotkey.bind({"shift", "alt"}, "L", function()
@@ -112,7 +113,7 @@ hs.hotkey.bind({"shift", "alt"}, "L", function()
   f.y = max.y
   f.w = max.w / 2
   f.h = max.h
-  win:setFrame(f, 0)
+  win:setFrame(f, animation_duration)
 end)
 
 
@@ -130,5 +131,5 @@ hs.hotkey.bind({"shift", "alt"}, "return", function()
   f.w = max.w
   f.h = max.h
   -- 0 ist fuer das Abschalten der Animation, damit es smoother ist
-  win:setFrame(f, 0)
+  win:setFrame(f, animation_duration)
 end)
