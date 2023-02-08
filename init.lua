@@ -11,10 +11,19 @@ hs.hotkey.bind({"shift", "alt"}, "T", shell_cmd("open -a iTerm ~/scripts/todos_i
 --- start quick open applications 
 function open_app(name)
     return function()
-        hs.application.launchOrFocus(name)
-        if name == 'Finder' then
-            hs.appfinder.appFromName(name):activate()
-        end
+	local app = hs.application.get(name)
+	if app then
+	    if app:isFrontmost() then
+		app:hide()
+	    else 
+		app:activate()
+	    end
+	else
+	    hs.application.launchOrFocus(name)
+	    if name == 'Finder' then
+		hs.appfinder.appFromName(name):activate()
+	    end
+	end
     end
 end
 -- Screenshot to Clipboard
@@ -46,13 +55,13 @@ hs.hotkey.bind({"shift", "alt"}, "space", function()
       end
   else
       hs.application.launchOrFocus("kitty")
-      app = hs.application.get("kitty")
+      -- app = hs.application.get("kitty")
   end
 
   -- app:mainWindow():moveToUnit'[100,50,0,0]'
   -- app:mainWindow().setShadows(false)
 end)
--- paired with hide_window_decorations yes in kitty.conf it makes for a very viable alternative to iTerm
+-- paired with 'hide_window_decorations yes' in kitty.conf it makes for a very viable alternative to iTerm
 -- hs.hotkey.bind({"alt", "shift"}, "H", function()
 --   local win = hs.window.focusedWindow()
 --   local f = win:frame()
@@ -76,6 +85,9 @@ end
 --
 hs.hotkey.bind({"shift", "alt"}, "H", function()
   local win = hs.window.focusedWindow()
+  if not win then
+  	return
+  end
   local f = win:frame()
   local screen = win:screen()
   local max = screen:frame()
@@ -84,11 +96,14 @@ hs.hotkey.bind({"shift", "alt"}, "H", function()
   f.y = max.y
   f.w = max.w / 2
   f.h = max.h
-  win:setFrame(f)
+  win:setFrame(f, 0)
 end)
 
 hs.hotkey.bind({"shift", "alt"}, "L", function()
   local win = hs.window.focusedWindow()
+  if not win then
+  	return
+  end
   local f = win:frame()
   local screen = win:screen()
   local max = screen:frame()
@@ -97,19 +112,23 @@ hs.hotkey.bind({"shift", "alt"}, "L", function()
   f.y = max.y
   f.w = max.w / 2
   f.h = max.h
-  win:setFrame(f)
+  win:setFrame(f, 0)
 end)
 
 
 hs.hotkey.bind({"shift", "alt"}, "return", function()
   local win = hs.window.focusedWindow()
+  if not win then
+  	return
+  end
   local f = win:frame()
   local screen = win:screen()
   local max = screen:frame()
 
-  f.x = max.x 
+  f.x = max.x
   f.y = max.y
   f.w = max.w
   f.h = max.h
-  win:setFrame(f)
+  -- 0 ist fuer das Abschalten der Animation, damit es smoother ist
+  win:setFrame(f, 0)
 end)
