@@ -41,26 +41,28 @@ hs.hotkey.bind({"shift", "alt"}, "C", open_app("Visual Studio Code"))
 hs.hotkey.bind({"shift", "alt"}, "F", open_app("Finder"))
 hs.hotkey.bind({"shift", "alt"}, "G", open_app("Google Chrome"))
 hs.hotkey.bind({"shift", "alt"}, "P", open_app("Preview"))
+hs.hotkey.bind({"shift", "alt"}, "space", open_app("kitty"))
 --- end quick open applications
 
-hs.hotkey.bind({"shift", "alt"}, "space", function()
-  local app = hs.application.get("kitty")
-  if app then
-      if not app:mainWindow() then
-          app:selectMenuItem({"kitty", "New OS window"})
-      elseif app:isFrontmost() then
-          app:hide()
-      else
-          app:activate()
-      end
-  else
-      hs.application.launchOrFocus("kitty")
-      -- app = hs.application.get("kitty")
-  end
-
-  -- app:mainWindow():moveToUnit'[100,50,0,0]'
-  -- app:mainWindow().setShadows(false)
-end)
+-- Wenn kein Window da ist, funktioniert 
+-- hs.hotkey.bind({"shift", "alt"}, "space", function()
+--   local app = hs.application.get("kitty")
+--   if app then
+--       if not app:mainWindow() then
+--           app:selectMenuItem({"kitty", "New OS window"})
+--       elseif app:isFrontmost() then
+--           app:hide()
+--       else
+--           app:activate()
+--       end
+--   else
+--       hs.application.launchOrFocus("kitty")
+--       -- app = hs.application.get("kitty")
+--   end
+--
+--   -- app:mainWindow():moveToUnit'[100,50,0,0]'
+--   -- app:mainWindow().setShadows(false)
+-- end)
 -- paired with 'hide_window_decorations yes' in kitty.conf it makes for a very viable alternative to iTerm
 -- hs.hotkey.bind({"alt", "shift"}, "H", function()
 --   local win = hs.window.focusedWindow()
